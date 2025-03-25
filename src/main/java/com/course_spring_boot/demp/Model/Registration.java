@@ -1,5 +1,7 @@
 package com.course_spring_boot.demp.Model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,8 @@ import lombok.Setter;
 @Getter
 public class Registration {
     private int id;
-    private int ticketId;
+    private @NotNull(message = "TicketId is required") int ticketId;
     private String code;
-    private String attendName;
+    // not vide=not blank
+    private @NotBlank(message = "Attendee name is required") String attendName;
 }
