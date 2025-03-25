@@ -1,7 +1,6 @@
 package com.course_spring_boot.demp.Service;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,18 +18,28 @@ public class RegistrationService {
     }
 
     public Registration findById(int id) {
-        return registrationRepository.findById(id).orElse(null);
+        return registrationRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Registration with id not found"));
     }
 
     public Registration findByCode(String ticketCode) {
-        return registrationRepository.findByCode(ticketCode).orElse(null);
+        return registrationRepository.findByCode(ticketCode)
+                .orElseThrow(() -> new NoSuchElementException("Registration with code not found"));
     }
 
     public Registration update(Registration registration) {
-        String code = registration.getCode();
-        var exsitsRegistration = findByCode(code);
-        return registrationRepository.update(exsitsRegistration, code);
+        if (registration == null || registration.getCode() == null) {
+            throw new IllegalArgumentException("Registration object or code cannot be null");
+        }
 
+        String code = registration.getCode();
+        var existsRegistration = findByCode(code);
+
+        if (existsRegistration == null) {
+            throw new IllegalArgumentException("No registration found with code: " + code);
+        }
+
+        return registrationRepository.update(existsRegistration, registration.getAttendName());
     }
 
     public void deleteByCode(String code) {
