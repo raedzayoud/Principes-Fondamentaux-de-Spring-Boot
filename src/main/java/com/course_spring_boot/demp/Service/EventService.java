@@ -20,7 +20,7 @@ public class EventService {
     }
 
     public List<Event> findByOrganiserId(int id) {
-        return eventRepository.findByOrganizerId(id);
+        return eventRepository.findByOrganiser_Id(id);
     }
 
 }

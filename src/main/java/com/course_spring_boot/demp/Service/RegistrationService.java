@@ -14,7 +14,7 @@ public class RegistrationService {
     RegistrationRepository registrationRepository;
 
     public Registration create(Registration registration) {
-        return registrationRepository.create(registration);
+        return registrationRepository.save(registration);
     }
 
     public Registration findById(int id) {
@@ -38,8 +38,9 @@ public class RegistrationService {
         if (existsRegistration == null) {
             throw new IllegalArgumentException("No registration found with code: " + code);
         }
-
-        return registrationRepository.update(existsRegistration, registration.getAttendName());
+        var updatRegistration = new Registration(existsRegistration.getId(), existsRegistration.getTicketId(), code,
+                existsRegistration.getAttendName());
+        return registrationRepository.save(updatRegistration);
     }
 
     public void deleteByCode(String code) {
