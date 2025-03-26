@@ -2,6 +2,9 @@ package com.course_spring_boot.demp.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,7 +35,9 @@ public class Locations {
     private String city;
     @Column(nullable = false)
     private String country;
+
     @OneToMany(mappedBy = "locations", cascade = CascadeType.ALL)
+    @JsonBackReference // prevent infinite loop
     private List<Event> events;
 
 }

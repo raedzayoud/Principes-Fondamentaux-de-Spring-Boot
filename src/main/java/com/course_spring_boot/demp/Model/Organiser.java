@@ -2,6 +2,9 @@ package com.course_spring_boot.demp.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,6 +35,7 @@ public class Organiser {
     @Column(nullable = false)
     private String description;
     @OneToMany(mappedBy = "organiser", cascade = CascadeType.ALL)
-    List<Event> events;
+    @JsonBackReference // prevent infinite loop
+    private List<Event> events;
 
 }

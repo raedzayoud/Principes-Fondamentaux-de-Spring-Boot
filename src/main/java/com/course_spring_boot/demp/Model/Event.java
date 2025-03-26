@@ -2,6 +2,9 @@ package com.course_spring_boot.demp.Model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,11 +30,15 @@ public class Event {
     private int id;
     @Column(nullable = false)
     private String name;
+
     @ManyToOne
+    // @JsonManagedReference
     @JoinColumn(name = "organiser_id", nullable = false)
     private Organiser organiser;
+
     @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
+    // @JsonBackReference
     private Locations locations;
     @Column(nullable = false)
     private LocalDate startDate;
